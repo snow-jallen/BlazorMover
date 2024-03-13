@@ -1,0 +1,20 @@
+@page "/keypress"
+@inject ILogger<KeyPress> logger
+
+<h3>Key Press Event on Div Example</h3>
+
+<div tabindex="0" @onkeydown="HandleKeyPress" style="border: 1px solid black; padding: 10px; width: 200px; text-align: center;">
+    Press a key inside this div
+</div>
+
+<p>Pressed Key: @pressedKey</p>
+
+@code {
+    private string pressedKey;
+
+    private void HandleKeyPress(KeyboardEventArgs args)
+    {
+        logger.LogInformation(args.Key);
+        pressedKey = args.Key;
+    }
+}

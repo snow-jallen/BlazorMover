@@ -1,0 +1,80 @@
+﻿@page "/"
+@inject ILogger<Home> logger
+
+<h3>Image Mover</h3>
+<style>
+    .movementContainer {
+        background-color: aliceblue;
+        height: 500px;
+        width: @(800 + x / 2)px;
+        margin: 1rem;
+        position: relative;
+    }
+
+    .imageToMove {
+        position: absolute;
+        bottom: @(y)px;
+        left: @(x)px;
+        width: 50px;
+        height: 50px;
+    }
+</style>
+<div tabindex="0" class="movementContainer" @onkeydown=keyPress>
+    <img src="@imageUrl" class=imageToMove />
+</div>
+
+<button @onclick="MoveUp">Up</button>
+<button @onclick="MoveDown">Down</button>
+<button @onclick="MoveLeft">Left</button>
+<button @onclick="MoveRight">Right</button>
+
+
+@code {
+    string imageUrl = "https://via.placeholder.com/50"; // Replace with your image URL
+    int y = 0;
+    int x = 0;
+
+    void MoveUp()
+    {
+        y += 10;
+        logger.LogInformation("x={x}; y={y}", x, y);
+    }
+
+    void MoveDown()
+    {
+        y -= 10;
+        logger.LogInformation("x={x}; y={y}", x, y);
+    }
+
+    void MoveLeft()
+    {
+        x -= 10;
+        logger.LogInformation("x={x}; y={y}", x, y);
+    }
+
+    void MoveRight()
+    {
+        x += 10;
+        logger.LogInformation("x={x}; y={y}", x, y);
+    }
+
+    void keyPress(KeyboardEventArgs e)
+    {
+        logger.LogInformation("Key {key} pressed", e.Key);
+        switch (e.Key)
+        {
+            case "ArrowUp":
+                MoveUp();
+                break;
+            case "ArrowDown":
+                MoveDown();
+                break;
+            case "ArrowRight":
+                MoveRight();
+                break;
+            case "ArrowLeft":
+                MoveLeft();
+                break;
+        }
+    }
+}

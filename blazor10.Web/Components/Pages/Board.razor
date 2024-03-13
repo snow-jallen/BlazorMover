@@ -1,0 +1,51 @@
+﻿@page "/board"
+@using blazor10.Logic;
+
+<h3>Board</h3>
+<style>
+    .movementContainer {
+        background-color: aliceblue;
+        height: 500px;
+        width: 800px;
+        margin: 1rem;
+        position: relative;
+    }
+
+    .imageToMove {
+        position: absolute;
+    }
+</style>
+<div tabindex="0" class="movementContainer">
+    @* @foreach (var img in DefaultImages.Images)
+    {
+        var style = $"top: {img.Top}px; left: {img.Left}px";
+        @if (img is DisplayImageWithCaption c)
+        {
+            <figure class=imageToMove style=@style>
+                <img src=@img.Url />
+                <figcaption>@c.Caption</figcaption>
+            </figure>
+        }
+        else
+        {
+            <img src=@img.Url style=@style class=imageToMove />
+        }
+    } *@
+
+    @foreach (var shape in DefaultImages.Shapes)
+    {
+        var style = $"top: {shape.Top}px; left: {shape.Left}px; position: absolute;";
+        @if(shape is Rectangle r)
+        {
+            <img src=@($"https://picsum.photos/{r.Length}/{r.Width}") style=@style />
+        }
+        else
+        {
+            <img src="https://picsum.photos/200" style=@style />
+        }
+    }
+</div>
+
+@code {
+
+}
