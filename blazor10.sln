@@ -1,11 +1,11 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "blazor10.Logic", "blazor10.Logic\blazor10.Logic.csproj", "{F24C396A-C66C-4B82-A86F-E07E03CE2E24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "blazor10.Logic", "blazor10.Logic\blazor10.Logic.csproj", "{F24C396A-C66C-4B82-A86F-E07E03CE2E24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "blazor10", "blazor10.Web\blazor10.csproj", "{5310B604-0393-4490-90F1-EA589C5321F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "blazor10", "blazor10.Web\blazor10.csproj", "{5310B604-0393-4490-90F1-EA589C5321F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

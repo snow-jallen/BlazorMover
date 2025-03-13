@@ -1,66 +1,65 @@
 ﻿@page "/"
 @inject ILogger<Home> logger
-
-<h3>Image Mover</h3>
 <style>
-    .movementContainer {
+    .fullScreen {
+        height: 97vh;
+        width: 98vw;
         background-color: aliceblue;
-        height: 500px;
-        width: @(800 + x / 2)px;
-        margin: 1rem;
+        margin: 0;
         position: relative;
-    }
-
-    .imageToMove {
-        position: absolute;
-        bottom: @(y)px;
-        left: @(x)px;
-        width: 50px;
-        height: 50px;
+        padding: 10px;
     }
 </style>
-<div tabindex="0" class="movementContainer" @onkeydown=keyPress>
-    <img src="@imageUrl" class=imageToMove />
+
+<div class="fullScreen" tabindex="0" @onkeydown=keyPress>
+    <h3>Tug of War</h3>
+    @if (yourName is null)
+    {
+        <input @bind=yourName placeholder="Enter your name" />
+    }
+    else
+    {
+        <img src="@imageUrl" style=@ImageStyle />
+
+        <button @onclick="MoveUp">Up</button>
+        <button @onclick="MoveDown">Down</button>
+        <button @onclick="MoveLeft">Left</button>
+        <button @onclick="MoveRight">Right</button>
+    }
 </div>
 
-<button @onclick="MoveUp">Up</button>
-<button @onclick="MoveDown">Down</button>
-<button @onclick="MoveLeft">Left</button>
-<button @onclick="MoveRight">Right</button>
-
-
 @code {
-    string imageUrl = "https://via.placeholder.com/50"; // Replace with your image URL
-    int y = 0;
-    int x = 0;
+    //These non-static variables are unique per instance:
+    string? yourName = null;
+    string ImageStyle => $"position: absolute; top: {y}px; left: {x}px; width: 75px;";
+    string imageUrl = "gamePiece.jpg"; // Replace with your image URL
 
-    void MoveUp()
+    //These static variables are shared across all instances:
+    static int y = 200;
+    static int x = 200;
+    static event Action? LocationChanged;
+
+    override protected void OnInitialized()
     {
-        y += 10;
-        logger.LogInformation("x={x}; y={y}", x, y);
+        LocationChanged += () => InvokeAsync(StateHasChanged);
     }
 
-    void MoveDown()
+    void move(int newX, int newY)
     {
-        y -= 10;
-        logger.LogInformation("x={x}; y={y}", x, y);
+        x = Math.Max(0, newX);
+        y = Math.Max(0, newY);
+        logger.LogInformation("{name}: ({x}, {y})", yourName, x, y);
+        LocationChanged?.Invoke();
     }
 
-    void MoveLeft()
-    {
-        x -= 10;
-        logger.LogInformation("x={x}; y={y}", x, y);
-    }
-
-    void MoveRight()
-    {
-        x += 10;
-        logger.LogInformation("x={x}; y={y}", x, y);
-    }
+    void MoveUp() => move(x, y-10);
+    void MoveDown() => move(x, y+10);
+    void MoveLeft() => move(x-10, y);
+    void MoveRight() => move(x+10, y);
 
     void keyPress(KeyboardEventArgs e)
     {
-        logger.LogInformation("Key {key} pressed", e.Key);
+        logger.LogInformation("{name}: Key {key} pressed", yourName, e.Key);
         switch (e.Key)
         {
             case "ArrowUp":
