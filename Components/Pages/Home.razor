@@ -18,6 +18,7 @@
 
 <div class="fullScreen" tabindex="0" @onkeydown=keyPress>
     <h3>Tug of War</h3>
+    
     @if (yourName is null)
     {
         <input @bind=yourName placeholder="Enter your name" />
@@ -49,19 +50,6 @@
         LocationChanged += () => InvokeAsync(StateHasChanged);
     }
 
-    void move(int newX, int newY)
-    {
-        x = Math.Max(0, newX);
-        y = Math.Max(0, newY);
-        logger.LogInformation("{name}: ({x}, {y})", yourName, x, y);
-        LocationChanged?.Invoke();
-    }
-
-    void MoveUp() => move(x, y-10);
-    void MoveDown() => move(x, y+10);
-    void MoveLeft() => move(x-10, y);
-    void MoveRight() => move(x+10, y);
-
     void keyPress(KeyboardEventArgs e)
     {
         logger.LogInformation("{name}: Key {key} pressed", yourName, e.Key);
@@ -80,5 +68,18 @@
                 MoveLeft();
                 break;
         }
+    }
+
+    void MoveUp() => move(x, y-10);
+    void MoveDown() => move(x, y+10);
+    void MoveLeft() => move(x-10, y);
+    void MoveRight() => move(x+10, y);
+
+    void move(int newX, int newY)
+    {
+        x = Math.Max(0, newX);
+        y = Math.Max(0, newY);
+        logger.LogInformation("{name}: ({x}, {y})", yourName, x, y);
+        LocationChanged?.Invoke();
     }
 }
