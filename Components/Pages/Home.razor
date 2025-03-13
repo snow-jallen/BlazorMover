@@ -1,13 +1,18 @@
 ﻿@page "/"
 @inject ILogger<Home> logger
 <style>
-    .fullScreen {
-        height: 97vh;
-        width: 98vw;
-        background-color: aliceblue;
+    body {
         margin: 0;
+        overflow: hidden;
+        background-color: aliceblue;
+    }    
+    h3 {
+        margin-left: 10px;
+    }
+    .fullScreen {
+        height: 100vh;
+        width: 100vw;
         position: relative;
-        padding: 10px;
     }
 </style>
 
